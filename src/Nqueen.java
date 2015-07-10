@@ -2,29 +2,15 @@ import java.util.Scanner;
 
 public class Nqueen {
 
-	/*
-	 * static ArrayList<ArrayList<Integer>> remainingValues = new
-	 * ArrayList<ArrayList<Integer>>(); static PriorityQueue<Integer> pq; static
-	 * Comparator<Integer> comparator=new Comparator<Integer>() {
-	 * 
-	 * @Override public int compare(Integer i, Integer j) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * 
-	 * int diff=remainingValues.get(i).size()-remainingValues.get(j).size();
-	 * 
-	 * if(diff>0) return 1; else if(diff<0)return -1; else if(i>j)return 1; else
-	 * return -1; } };
-	 */
-
 	public static int[][] grid;
 	public static boolean[] assigned;
+	public static int countAll=0;
+	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-
-		int N = Integer.parseInt(args[0]);// sc.nextInt();
-		//final code to show is the following block
+		System.out.print("Enter N:");
+		int N = /*Integer.parseInt(args[0]);*/sc.nextInt();
 		int[] X = new int[N + 1];
 		grid = new int[N + 1][N + 1];
 		assigned=new boolean[N+1];
@@ -37,20 +23,12 @@ public class Nqueen {
 		System.out.println("All valid n-queen assignment.");
 		placeNQueensAll(new int[N + 1], N, 1);
 
-		/*
-		 * for (int i = 0; i <= N; i++) { ArrayList<Integer> integers=new
-		 * ArrayList<Integer>(); remainingValues.add(integers); }
-		 * 
-		 * for (int i = 1; i <= N; i++) { for (int j = 1; j <= N; j++) {
-		 * remainingValues.get(i).add(j); } } pq=new PriorityQueue<Integer>(N+1,
-		 * comparator); for (int i = 1; i <= N; i++) { pq.add(i); }
-		 */
-
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
 				grid[i][j] = 0;
 			}
 		}
+		//countAll=0;
 		System.out.println("All valid n-queen assignment with forward checking.");
 		placeNQueensFCMRV(X,N);
 	}
@@ -58,7 +36,9 @@ public class Nqueen {
 	private static boolean placeNQueensFCMRV(int[] X, int N) {
 		// TODO Auto-generated method stub
 		if (selectRowMRV()==0) {
-			for (int integer : X) {
+			/*countAll++;
+			System.out.print("Solution "+countAll +" :");
+			*/for (int integer : X) {
 				if(integer==0)continue;
 				System.out.print(integer+ " ");
 			}
@@ -68,8 +48,6 @@ public class Nqueen {
 
 		int i = selectRowMRV();
 		assigned[i]=true;
-		/* ArrayList<Integer> validValues=remainingValues.get(i); */
-
 		for (int j = 1; j < X.length; j++) {
 			if (grid[i][j] == 0) {
 				X[i] = j;
@@ -119,35 +97,6 @@ public class Nqueen {
 	}
 
 	private static boolean forwardCheck(int[] X, int i, int j) {
-
-		/*
-		 * ArrayList<Map.Entry<Integer, Integer>> deletedPairs=new
-		 * ArrayList<Map.Entry<Integer,Integer>>();
-		 * 
-		 * Integer jInteger= new Integer(j); for (int k = 1; k < X.length; k++)
-		 * { if(remainingValues.get(k).contains(jInteger)); {
-		 * deletedPairs.add(new AbstractMap.SimpleEntry(k, j));
-		 * remainingValues.get(k).remove(jInteger);
-		 * 
-		 * } }
-		 * 
-		 * ArrayList<Integer> iarray=remainingValues.get(i); int
-		 * size=iarray.size(); for (int k = 0; k < size; k++) { int
-		 * toBeRemoved=iarray.get(k); if (iarray.contains(new
-		 * Integer(toBeRemoved))) { deletedPairs.add(new
-		 * AbstractMap.SimpleEntry(i, toBeRemoved)); iarray.remove(new
-		 * Integer(toBeRemoved)); } }
-		 * 
-		 * for (int k = 0; k < X.length; k++) { int col=j+(i-k); if(col>=0 &&
-		 * col<=X.length && k!=i) { if(remainingValues.get(k).contains(col)) {
-		 * deletedPairs.add(new AbstractMap.SimpleEntry(k, col));
-		 * remainingValues.get(k).remove(new Integer(col)); } } }
-		 * 
-		 * for (int k = 1; k <= X.length; k++) {
-		 * if(remainingValues.get(k).size()==0) {
-		 * 
-		 * return false; } }
-		 */
 
 		for (int k = 1; k < grid.length; k++) {
 			grid[k][j]++;
@@ -205,7 +154,9 @@ public class Nqueen {
 	private static boolean placeNQueensAll(int[] X, int N, int i) {
 		// TODO Auto-generated method stub
 		if (i == N + 1) {
-			for (int j : X) {
+			/*countAll++;
+			System.out.print("Solution "+countAll +" :");
+			*/for (int j : X) {
 				if (j == 0)
 					continue;
 				System.out.print(j + " ");
